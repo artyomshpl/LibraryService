@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class LibraryService {
     @Autowired
@@ -17,23 +19,21 @@ public class LibraryService {
         return freeBookRepository.findAll(pageable);
     }
 
-    public FreeBook getFreeBookById(Long id) {
-        return freeBookRepository.findById(id).orElse(null);
+    public Optional<FreeBook> getFreeBookById(Long id) {
+        return freeBookRepository.findById(id);
     }
 
     public FreeBook createFreeBook(FreeBook freeBook) {
         return freeBookRepository.save(freeBook);
     }
 
-    public FreeBook updateFreeBook(Long id, FreeBook freeBookDetails) {
-        FreeBook freeBook = freeBookRepository.findById(id).orElse(null);
-        if (freeBook != null) {
+    public Optional<FreeBook> updateFreeBook(Long id, FreeBook freeBookDetails) {
+        return freeBookRepository.findById(id).map(freeBook -> {
             freeBook.setBookId(freeBookDetails.getBookId());
             freeBook.setBorrowedTime(freeBookDetails.getBorrowedTime());
             freeBook.setReturnTime(freeBookDetails.getReturnTime());
             return freeBookRepository.save(freeBook);
-        }
-        return null;
+        });
     }
 
     public void deleteFreeBook(Long id) {

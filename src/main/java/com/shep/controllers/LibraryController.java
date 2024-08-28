@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/library")
 public class LibraryController {
@@ -41,12 +43,8 @@ public class LibraryController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<FreeBook> getFreeBookById(@PathVariable Long id) {
-        FreeBook freeBook = libraryService.getFreeBookById(id);
-        if (freeBook != null) {
-            return ResponseEntity.ok(freeBook);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<FreeBook> freeBook = libraryService.getFreeBookById(id);
+        return freeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Create a new free book")
@@ -71,12 +69,8 @@ public class LibraryController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<FreeBook> updateFreeBook(@PathVariable Long id, @RequestBody FreeBook freeBookDetails) {
-        FreeBook updatedFreeBook = libraryService.updateFreeBook(id, freeBookDetails);
-        if (updatedFreeBook != null) {
-            return ResponseEntity.ok(updatedFreeBook);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<FreeBook> updatedFreeBook = libraryService.updateFreeBook(id, freeBookDetails);
+        return updatedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Delete a free book")
