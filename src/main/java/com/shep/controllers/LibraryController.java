@@ -73,7 +73,7 @@ public class LibraryController {
         return updatedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Delete a free book")
+    @Operation(summary = "Delete a free book by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Successful operation"),
             @ApiResponse(responseCode = "404", description = "Free book not found", content = @Content)
@@ -81,6 +81,17 @@ public class LibraryController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFreeBook(@PathVariable Long id) {
         libraryService.deleteFreeBook(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Delete a free book by book id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "Free book not found", content = @Content)
+    })
+    @DeleteMapping("/{bookId}")
+    public ResponseEntity<Void> deleteFreeBookByBookId(@PathVariable Long bookId) {
+        libraryService.deleteFreeBookByBookId(bookId);
         return ResponseEntity.noContent().build();
     }
 

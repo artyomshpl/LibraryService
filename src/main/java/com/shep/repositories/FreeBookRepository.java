@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface FreeBookRepository extends JpaRepository<FreeBook, Long> {
     Optional<FreeBook> findById(Long id);
     Optional<FreeBook> findByBookId(Long bookId);
+    Optional<FreeBook> deleteByBookId(Long bookId);
 }

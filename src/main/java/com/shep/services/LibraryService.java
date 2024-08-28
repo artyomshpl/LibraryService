@@ -54,4 +54,8 @@ public class LibraryService {
     public void deleteFreeBook(Long id) {
         freeBookRepository.deleteById(id);
     }
+
+    public void deleteFreeBookByBookId(Long bookId) {
+        freeBookRepository.deleteByBookId(bookId);
+    }
 }
