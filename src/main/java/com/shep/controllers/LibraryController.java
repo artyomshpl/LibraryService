@@ -83,4 +83,30 @@ public class LibraryController {
         libraryService.deleteFreeBook(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "Borrow a free book by book ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = FreeBook.class))}),
+            @ApiResponse(responseCode = "404", description = "Free book not found", content = @Content)
+    })
+    @PutMapping("/borrow/{bookId}")
+    public ResponseEntity<FreeBook> borrowFreeBook(@PathVariable Long bookId) {
+        Optional<FreeBook> borrowedFreeBook = libraryService.borrowFreeBookByBookId(bookId);
+        return borrowedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "Return a free book by book ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = FreeBook.class))}),
+            @ApiResponse(responseCode = "404", description = "Free book not found", content = @Content)
+    })
+    @PutMapping("/return/{bookId}")
+    public ResponseEntity<FreeBook> returnFreeBook(@PathVariable Long bookId) {
+        Optional<FreeBook> returnedFreeBook = libraryService.returnFreeBookByBookId(bookId);
+        return returnedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
