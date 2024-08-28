@@ -4,17 +4,17 @@ package com.shep.services;
 import com.shep.entities.FreeBook;
 import com.shep.repositories.FreeBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class LibraryService {
     @Autowired
     private FreeBookRepository freeBookRepository;
 
-    public List<FreeBook> getAllFreeBooks() {
-        return freeBookRepository.findAll();
+    public Page<FreeBook> getAllFreeBooks(Pageable pageable) {
+        return freeBookRepository.findAll(pageable);
     }
 
     public FreeBook getFreeBookById(Long id) {

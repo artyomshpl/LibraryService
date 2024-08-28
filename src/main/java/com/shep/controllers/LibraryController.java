@@ -9,10 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/library")
@@ -20,16 +20,16 @@ public class LibraryController {
     @Autowired
     private LibraryService libraryService;
 
-    @Operation(summary = "Get all free books")
+    @Operation(summary = "Get all free books with pagination")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = FreeBook.class))}),
+                            schema = @Schema(implementation = Page.class))}),
             @ApiResponse(responseCode = "404", description = "Free books not found", content = @Content)
     })
     @GetMapping
-    public List<FreeBook> getAllFreeBooks() {
-        return libraryService.getAllFreeBooks();
+    public Page<FreeBook> getAllFreeBooks(Pageable pageable) {
+        return libraryService.getAllFreeBooks(pageable);
     }
 
     @Operation(summary = "Get a free book by ID")
