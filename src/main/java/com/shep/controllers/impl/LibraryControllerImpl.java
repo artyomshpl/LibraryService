@@ -3,7 +3,7 @@ package com.shep.controllers.impl;
 import com.shep.controllers.interfaces.LibraryControllerDocs;
 import com.shep.entities.FreeBook;
 import com.shep.services.LibraryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +13,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/library")
+@RequiredArgsConstructor
 public class LibraryControllerImpl implements LibraryControllerDocs {
-    @Autowired
-    private LibraryService libraryService;
+
+    private final LibraryService libraryService;
 
     @Override
     public Page<FreeBook> getAllFreeBooks(Pageable pageable) {

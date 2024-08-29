@@ -3,7 +3,7 @@ package com.shep.services;
 
 import com.shep.entities.FreeBook;
 import com.shep.repositories.FreeBookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LibraryService {
-    @Autowired
-    private FreeBookRepository freeBookRepository;
+    private final FreeBookRepository freeBookRepository;
+
 
     public Page<FreeBook> getAllFreeBooks(Pageable pageable) {
         return freeBookRepository.findAll(pageable);
