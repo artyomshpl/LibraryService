@@ -89,7 +89,7 @@ public class LibraryController {
             @ApiResponse(responseCode = "204", description = "Successful operation"),
             @ApiResponse(responseCode = "404", description = "Free book not found", content = @Content)
     })
-    @DeleteMapping("/{bookId}")
+    @DeleteMapping("/book/{bookId}")
     public ResponseEntity<Void> deleteFreeBookByBookId(@PathVariable Long bookId) {
         libraryService.deleteFreeBookByBookId(bookId);
         return ResponseEntity.noContent().build();
