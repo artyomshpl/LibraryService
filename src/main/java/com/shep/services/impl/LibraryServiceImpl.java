@@ -1,7 +1,7 @@
 package com.shep.services.impl;
 
-
 import com.shep.entities.FreeBook;
+import com.shep.exceptions.NotFoundException;
 import com.shep.repositories.FreeBookRepository;
 import com.shep.services.interfaces.LibraryServiceInterface;
 import lombok.RequiredArgsConstructor;
@@ -35,38 +35,46 @@ public class LibraryServiceImpl implements LibraryServiceInterface {
 
     @Override
     public Optional<FreeBook> updateFreeBook(Long id, FreeBook freeBookDetails) {
-        return freeBookRepository.findById(id).map(freeBook -> {
+        return Optional.ofNullable(freeBookRepository.findById(id).map(freeBook -> {
             freeBook.setBookId(freeBookDetails.getBookId());
             freeBook.setBorrowedTime(freeBookDetails.getBorrowedTime());
             freeBook.setReturnTime(freeBookDetails.getReturnTime());
             return freeBookRepository.save(freeBook);
-        });
+        }).orElseThrow(() -> new NotFoundException("Free book not found with id " + id)));
     }
 
     @Override
     public Optional<FreeBook> borrowFreeBookByBookId(Long bookId) {
-        return freeBookRepository.findByBookId(bookId).map(freeBook -> {
+        return Optional.ofNullable(freeBookRepository.findByBookId(bookId).map(freeBook -> {
             freeBook.setBorrowedTime(LocalDateTime.now());
             return freeBookRepository.save(freeBook);
-        });
+        }).orElseThrow(() -> new NotFoundException("Free book not found with bookId " + bookId)));
     }
 
     @Override
     public Optional<FreeBook> returnFreeBookByBookId(Long bookId) {
-        return freeBookRepository.findByBookId(bookId).map(freeBook -> {
+        return Optional.ofNullable(freeBookRepository.findByBookId(bookId).map(freeBook -> {
             freeBook.setReturnTime(LocalDateTime.now());
             return freeBookRepository.save(freeBook);
-        });
+        }).orElseThrow(() -> new NotFoundException("Free book not found with bookId " + bookId)));
     }
 
     @Override
     public void deleteFreeBook(Long id) {
+        if (!freeBookRepository.existsById(id)) {
+            throw new NotFoundException("Free book not found with id " + id);
+        }
         freeBookRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public void deleteFreeBookByBookId(Long bookId) {
-        freeBookRepository.deleteByBookId(bookId);
+        Optional<FreeBook> freeBook = freeBookRepository.findByBookId(bookId);
+        if (freeBook.isPresent()) {
+            freeBookRepository.deleteByBookId(bookId);
+        } else {
+            throw new NotFoundException("Free book not found with bookId " + bookId);
+        }
     }
 }
