@@ -1,6 +1,6 @@
 package com.shep.controllers.interfaces;
 
-import com.shep.entities.FreeBook;
+import com.shep.dto.FreeBookDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,38 +22,38 @@ public interface LibraryControllerDocs {
             @ApiResponse(responseCode = "404", description = "Free books not found", content = @Content)
     })
     @GetMapping
-    Page<FreeBook> getAllFreeBooks(Pageable pageable);
+    Page<FreeBookDTO> getAllFreeBooks(Pageable pageable);
 
     @Operation(summary = "Get a free book by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = FreeBook.class))}),
+                            schema = @Schema(implementation = FreeBookDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Free book not found", content = @Content)
     })
     @GetMapping("/{id}")
-    ResponseEntity<FreeBook> getFreeBookById(@PathVariable Long id);
+    ResponseEntity<FreeBookDTO> getFreeBookById(@PathVariable Long id);
 
     @Operation(summary = "Create a new free book")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = FreeBook.class))}),
+                            schema = @Schema(implementation = FreeBookDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
-    FreeBook createFreeBook(@RequestBody FreeBook freeBook);
+    FreeBookDTO createFreeBook(@RequestBody FreeBookDTO freeBookDto);
 
     @Operation(summary = "Update a free book")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = FreeBook.class))}),
+                            schema = @Schema(implementation = FreeBookDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Free book not found", content = @Content)
     })
     @PutMapping("/{id}")
-    ResponseEntity<FreeBook> updateFreeBook(@PathVariable Long id, @RequestBody FreeBook freeBookDetails);
+    ResponseEntity<FreeBookDTO> updateFreeBook(@PathVariable Long id, @RequestBody FreeBookDTO freeBookDetails);
 
     @Operation(summary = "Delete a free book by id")
     @ApiResponses(value = {
@@ -75,19 +75,19 @@ public interface LibraryControllerDocs {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = FreeBook.class))}),
+                            schema = @Schema(implementation = FreeBookDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Free book not found", content = @Content)
     })
     @PutMapping("/borrow/{bookId}")
-    ResponseEntity<FreeBook> borrowFreeBook(@PathVariable Long bookId);
+    ResponseEntity<FreeBookDTO> borrowFreeBook(@PathVariable Long bookId);
 
     @Operation(summary = "Return a free book by book ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = FreeBook.class))}),
+                            schema = @Schema(implementation = FreeBookDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Free book not found", content = @Content)
     })
     @PutMapping("/return/{bookId}")
-    ResponseEntity<FreeBook> returnFreeBook(@PathVariable Long bookId);
+    ResponseEntity<FreeBookDTO> returnFreeBook(@PathVariable Long bookId);
 }

@@ -24,6 +24,7 @@
     <mokito-core.version>5.11.0</mokito-core.version>
     <junit.version>3.8.1</junit.version>
     <spring-boot-test-autoconfigure.version>3.3.1</spring-boot-test-autoconfigure.version>
+    <mapstruct.version>1.5.2.Final</mapstruct.version>
   </properties>
 
   <dependencies>
@@ -92,6 +93,17 @@
       <artifactId>spring-boot-test-autoconfigure</artifactId>
       <version>${spring-boot-test-autoconfigure.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${mapstruct.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct-processor</artifactId>
+      <version>${mapstruct.version}</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

@@ -1,7 +1,9 @@
 package com.shep.services.impl;
 
+import com.shep.dto.FreeBookDTO;
 import com.shep.entities.FreeBook;
 import com.shep.exceptions.NotFoundException;
+import com.shep.mappers.FreeBookMapper;
 import com.shep.repositories.FreeBookRepository;
 import com.shep.services.interfaces.LibraryServiceInterface;
 import lombok.RequiredArgsConstructor;
@@ -17,48 +19,50 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LibraryServiceImpl implements LibraryServiceInterface {
     private final FreeBookRepository freeBookRepository;
+    private final FreeBookMapper freeBookMapper;
 
     @Override
-    public Page<FreeBook> getAllFreeBooks(Pageable pageable) {
-        return freeBookRepository.findAll(pageable);
+    public Page<FreeBookDTO> getAllFreeBooks(Pageable pageable) {
+        return freeBookRepository.findAll(pageable).map(freeBookMapper::toDto);
     }
 
     @Override
-    public Optional<FreeBook> getFreeBookById(Long id) {
-        return freeBookRepository.findById(id);
+    public Optional<FreeBookDTO> getFreeBookById(Long id) {
+        return freeBookRepository.findById(id).map(freeBookMapper::toDto);
     }
 
     @Override
-    public FreeBook createFreeBook(FreeBook freeBook) {
-        return freeBookRepository.save(freeBook);
+    public FreeBookDTO createFreeBook(FreeBookDTO freeBookDto) {
+        FreeBook freeBook = freeBookMapper.toEntity(freeBookDto);
+        return freeBookMapper.toDto(freeBookRepository.save(freeBook));
     }
 
     @Override
-    public Optional<FreeBook> updateFreeBook(Long id, FreeBook freeBookDetails) {
-        return Optional.ofNullable(freeBookRepository.findById(id).map(freeBook -> {
+    public Optional<FreeBookDTO> updateFreeBook(Long id, FreeBookDTO freeBookDetails) {
+        return freeBookRepository.findById(id).map(freeBook -> {
             freeBook.setBookId(freeBookDetails.getBookId());
             freeBook.setBorrowedTime(freeBookDetails.getBorrowedTime());
             freeBook.setReturnTime(freeBookDetails.getReturnTime());
-            return freeBookRepository.save(freeBook);
-        }).orElseThrow(() -> new NotFoundException("Free book not found with id " + id)));
+            return freeBookMapper.toDto(freeBookRepository.save(freeBook));
+        }).map(Optional::of).orElseThrow(() -> new NotFoundException("Free book not found with id " + id));
     }
 
     @Override
-    public Optional<FreeBook> borrowFreeBookByBookId(Long bookId) {
-        return Optional.ofNullable(freeBookRepository.findByBookId(bookId).map(freeBook -> {
+    public Optional<FreeBookDTO> borrowFreeBookByBookId(Long bookId) {
+        return freeBookRepository.findByBookId(bookId).map(freeBook -> {
             freeBook.setBorrowedTime(LocalDateTime.now());
             freeBook.setReturnTime(null);
-            return freeBookRepository.save(freeBook);
-        }).orElseThrow(() -> new NotFoundException("Free book not found with bookId " + bookId)));
+            return freeBookMapper.toDto(freeBookRepository.save(freeBook));
+        }).map(Optional::of).orElseThrow(() -> new NotFoundException("Free book not found with bookId " + bookId));
     }
 
     @Override
-    public Optional<FreeBook> returnFreeBookByBookId(Long bookId) {
-        return Optional.ofNullable(freeBookRepository.findByBookId(bookId).map(freeBook -> {
+    public Optional<FreeBookDTO> returnFreeBookByBookId(Long bookId) {
+        return freeBookRepository.findByBookId(bookId).map(freeBook -> {
             freeBook.setBorrowedTime(null);
             freeBook.setReturnTime(LocalDateTime.now());
-            return freeBookRepository.save(freeBook);
-        }).orElseThrow(() -> new NotFoundException("Free book not found with bookId " + bookId)));
+            return freeBookMapper.toDto(freeBookRepository.save(freeBook));
+        }).map(Optional::of).orElseThrow(() -> new NotFoundException("Free book not found with bookId " + bookId));
     }
 
     @Override

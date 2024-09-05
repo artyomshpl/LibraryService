@@ -1,7 +1,7 @@
 package com.shep.controllers.impl;
 
 import com.shep.controllers.interfaces.LibraryControllerDocs;
-import com.shep.entities.FreeBook;
+import com.shep.dto.FreeBookDTO;
 import com.shep.services.impl.LibraryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,24 +19,24 @@ public class LibraryControllerImpl implements LibraryControllerDocs {
     private final LibraryServiceImpl libraryServiceImpl;
 
     @Override
-    public Page<FreeBook> getAllFreeBooks(Pageable pageable) {
+    public Page<FreeBookDTO> getAllFreeBooks(Pageable pageable) {
         return libraryServiceImpl.getAllFreeBooks(pageable);
     }
 
     @Override
-    public ResponseEntity<FreeBook> getFreeBookById(@PathVariable Long id) {
-        Optional<FreeBook> freeBook = libraryServiceImpl.getFreeBookById(id);
+    public ResponseEntity<FreeBookDTO> getFreeBookById(@PathVariable Long id) {
+        Optional<FreeBookDTO> freeBook = libraryServiceImpl.getFreeBookById(id);
         return freeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
-    public FreeBook createFreeBook(@RequestBody FreeBook freeBook) {
-        return libraryServiceImpl.createFreeBook(freeBook);
+    public FreeBookDTO createFreeBook(@RequestBody FreeBookDTO freeBookDto) {
+        return libraryServiceImpl.createFreeBook(freeBookDto);
     }
 
     @Override
-    public ResponseEntity<FreeBook> updateFreeBook(@PathVariable Long id, @RequestBody FreeBook freeBookDetails) {
-        Optional<FreeBook> updatedFreeBook = libraryServiceImpl.updateFreeBook(id, freeBookDetails);
+    public ResponseEntity<FreeBookDTO> updateFreeBook(@PathVariable Long id, @RequestBody FreeBookDTO freeBookDetails) {
+        Optional<FreeBookDTO> updatedFreeBook = libraryServiceImpl.updateFreeBook(id, freeBookDetails);
         return updatedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -53,14 +53,14 @@ public class LibraryControllerImpl implements LibraryControllerDocs {
     }
 
     @Override
-    public ResponseEntity<FreeBook> borrowFreeBook(@PathVariable Long bookId) {
-        Optional<FreeBook> borrowedFreeBook = libraryServiceImpl.borrowFreeBookByBookId(bookId);
+    public ResponseEntity<FreeBookDTO> borrowFreeBook(@PathVariable Long bookId) {
+        Optional<FreeBookDTO> borrowedFreeBook = libraryServiceImpl.borrowFreeBookByBookId(bookId);
         return borrowedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
-    public ResponseEntity<FreeBook> returnFreeBook(@PathVariable Long bookId) {
-        Optional<FreeBook> returnedFreeBook = libraryServiceImpl.returnFreeBookByBookId(bookId);
+    public ResponseEntity<FreeBookDTO> returnFreeBook(@PathVariable Long bookId) {
+        Optional<FreeBookDTO> returnedFreeBook = libraryServiceImpl.returnFreeBookByBookId(bookId);
         return returnedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
