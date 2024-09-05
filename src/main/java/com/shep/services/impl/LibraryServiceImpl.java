@@ -47,6 +47,7 @@ public class LibraryServiceImpl implements LibraryServiceInterface {
     public Optional<FreeBook> borrowFreeBookByBookId(Long bookId) {
         return Optional.ofNullable(freeBookRepository.findByBookId(bookId).map(freeBook -> {
             freeBook.setBorrowedTime(LocalDateTime.now());
+            freeBook.setReturnTime(null);
             return freeBookRepository.save(freeBook);
         }).orElseThrow(() -> new NotFoundException("Free book not found with bookId " + bookId)));
     }
@@ -54,6 +55,7 @@ public class LibraryServiceImpl implements LibraryServiceInterface {
     @Override
     public Optional<FreeBook> returnFreeBookByBookId(Long bookId) {
         return Optional.ofNullable(freeBookRepository.findByBookId(bookId).map(freeBook -> {
+            freeBook.setBorrowedTime(null);
             freeBook.setReturnTime(LocalDateTime.now());
             return freeBookRepository.save(freeBook);
         }).orElseThrow(() -> new NotFoundException("Free book not found with bookId " + bookId)));
