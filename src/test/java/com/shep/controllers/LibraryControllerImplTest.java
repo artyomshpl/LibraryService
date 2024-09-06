@@ -1,8 +1,8 @@
 package com.shep.controllers;
 
 import com.shep.controllers.impl.LibraryControllerImpl;
-import com.shep.entities.FreeBook;
-import com.shep.services.impl.LibraryServiceImpl;
+import com.shep.dataTransferObjects.FreeBookDTO;
+import com.shep.services.implementation.LibraryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -36,10 +36,10 @@ public class LibraryControllerImplTest {
     @Test
     public void testGetAllFreeBooks() {
         Pageable pageable = PageRequest.of(0, 10);
-        Page<FreeBook> freeBooks = new PageImpl<>(Collections.emptyList());
+        Page<FreeBookDTO> freeBooks = new PageImpl<>(Collections.emptyList());
         when(libraryServiceImpl.getAllFreeBooks(pageable)).thenReturn(freeBooks);
 
-        Page<FreeBook> result = libraryControllerImpl.getAllFreeBooks(pageable);
+        Page<FreeBookDTO> result = libraryControllerImpl.getAllFreeBooks(pageable);
 
         assertEquals(freeBooks, result);
         verify(libraryServiceImpl, times(1)).getAllFreeBooks(pageable);
@@ -48,34 +48,34 @@ public class LibraryControllerImplTest {
     @Test
     public void testGetFreeBookById() {
         Long id = 1L;
-        FreeBook freeBook = new FreeBook();
-        when(libraryServiceImpl.getFreeBookById(id)).thenReturn(Optional.of(freeBook));
+        FreeBookDTO freeBookDto = new FreeBookDTO();
+        when(libraryServiceImpl.getFreeBookById(id)).thenReturn(Optional.of(freeBookDto));
 
-        ResponseEntity<FreeBook> result = libraryControllerImpl.getFreeBookById(id);
+        ResponseEntity<FreeBookDTO> result = libraryControllerImpl.getFreeBookById(id);
 
-        assertEquals(ResponseEntity.ok(freeBook), result);
+        assertEquals(ResponseEntity.ok(freeBookDto), result);
         verify(libraryServiceImpl, times(1)).getFreeBookById(id);
     }
 
     @Test
     public void testCreateFreeBook() {
-        FreeBook freeBook = new FreeBook();
-        when(libraryServiceImpl.createFreeBook(freeBook)).thenReturn(freeBook);
+        FreeBookDTO freeBookDto = new FreeBookDTO();
+        when(libraryServiceImpl.createFreeBook(freeBookDto)).thenReturn(freeBookDto);
 
-        FreeBook result = libraryControllerImpl.createFreeBook(freeBook);
+        FreeBookDTO result = libraryControllerImpl.createFreeBook(freeBookDto);
 
-        assertEquals(freeBook, result);
-        verify(libraryServiceImpl, times(1)).createFreeBook(freeBook);
+        assertEquals(freeBookDto, result);
+        verify(libraryServiceImpl, times(1)).createFreeBook(freeBookDto);
     }
 
     @Test
     public void testUpdateFreeBook() {
         Long id = 1L;
-        FreeBook freeBookDetails = new FreeBook();
-        FreeBook updatedFreeBook = new FreeBook();
+        FreeBookDTO freeBookDetails = new FreeBookDTO();
+        FreeBookDTO updatedFreeBook = new FreeBookDTO();
         when(libraryServiceImpl.updateFreeBook(id, freeBookDetails)).thenReturn(Optional.of(updatedFreeBook));
 
-        ResponseEntity<FreeBook> result = libraryControllerImpl.updateFreeBook(id, freeBookDetails);
+        ResponseEntity<FreeBookDTO> result = libraryControllerImpl.updateFreeBook(id, freeBookDetails);
 
         assertEquals(ResponseEntity.ok(updatedFreeBook), result);
         verify(libraryServiceImpl, times(1)).updateFreeBook(id, freeBookDetails);
@@ -106,10 +106,10 @@ public class LibraryControllerImplTest {
     @Test
     public void testBorrowFreeBook() {
         Long bookId = 1L;
-        FreeBook borrowedFreeBook = new FreeBook();
+        FreeBookDTO borrowedFreeBook = new FreeBookDTO();
         when(libraryServiceImpl.borrowFreeBookByBookId(bookId)).thenReturn(Optional.of(borrowedFreeBook));
 
-        ResponseEntity<FreeBook> result = libraryControllerImpl.borrowFreeBook(bookId);
+        ResponseEntity<FreeBookDTO> result = libraryControllerImpl.borrowFreeBook(bookId);
 
         assertEquals(ResponseEntity.ok(borrowedFreeBook), result);
         verify(libraryServiceImpl, times(1)).borrowFreeBookByBookId(bookId);
@@ -118,10 +118,10 @@ public class LibraryControllerImplTest {
     @Test
     public void testReturnFreeBook() {
         Long bookId = 1L;
-        FreeBook returnedFreeBook = new FreeBook();
+        FreeBookDTO returnedFreeBook = new FreeBookDTO();
         when(libraryServiceImpl.returnFreeBookByBookId(bookId)).thenReturn(Optional.of(returnedFreeBook));
 
-        ResponseEntity<FreeBook> result = libraryControllerImpl.returnFreeBook(bookId);
+        ResponseEntity<FreeBookDTO> result = libraryControllerImpl.returnFreeBook(bookId);
 
         assertEquals(ResponseEntity.ok(returnedFreeBook), result);
         verify(libraryServiceImpl, times(1)).returnFreeBookByBookId(bookId);

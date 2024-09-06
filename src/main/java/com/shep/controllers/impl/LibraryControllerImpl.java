@@ -1,8 +1,8 @@
 package com.shep.controllers.impl;
 
 import com.shep.controllers.interfaces.LibraryControllerDocs;
-import com.shep.entities.FreeBook;
-import com.shep.services.impl.LibraryServiceImpl;
+import com.shep.dataTransferObjects.FreeBookDTO;
+import com.shep.services.interfaces.LibraryServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,51 +16,51 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LibraryControllerImpl implements LibraryControllerDocs {
 
-    private final LibraryServiceImpl libraryServiceImpl;
+    private final LibraryServiceInterface libraryServiceInterface;
 
     @Override
-    public Page<FreeBook> getAllFreeBooks(Pageable pageable) {
-        return libraryServiceImpl.getAllFreeBooks(pageable);
+    public Page<FreeBookDTO> getAllFreeBooks(Pageable pageable) {
+        return libraryServiceInterface.getAllFreeBooks(pageable);
     }
 
     @Override
-    public ResponseEntity<FreeBook> getFreeBookById(@PathVariable Long id) {
-        Optional<FreeBook> freeBook = libraryServiceImpl.getFreeBookById(id);
+    public ResponseEntity<FreeBookDTO> getFreeBookById(@PathVariable Long id) {
+        Optional<FreeBookDTO> freeBook = libraryServiceInterface.getFreeBookById(id);
         return freeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
-    public FreeBook createFreeBook(@RequestBody FreeBook freeBook) {
-        return libraryServiceImpl.createFreeBook(freeBook);
+    public FreeBookDTO createFreeBook(@RequestBody FreeBookDTO freeBookDto) {
+        return libraryServiceInterface.createFreeBook(freeBookDto);
     }
 
     @Override
-    public ResponseEntity<FreeBook> updateFreeBook(@PathVariable Long id, @RequestBody FreeBook freeBookDetails) {
-        Optional<FreeBook> updatedFreeBook = libraryServiceImpl.updateFreeBook(id, freeBookDetails);
+    public ResponseEntity<FreeBookDTO> updateFreeBook(@PathVariable Long id, @RequestBody FreeBookDTO freeBookDetails) {
+        Optional<FreeBookDTO> updatedFreeBook = libraryServiceInterface.updateFreeBook(id, freeBookDetails);
         return updatedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
     public ResponseEntity<Void> deleteFreeBook(@PathVariable Long id) {
-        libraryServiceImpl.deleteFreeBook(id);
+        libraryServiceInterface.deleteFreeBook(id);
         return ResponseEntity.noContent().build();
     }
 
     @Override
     public ResponseEntity<Void> deleteFreeBookByBookId(@PathVariable Long bookId) {
-        libraryServiceImpl.deleteFreeBookByBookId(bookId);
+        libraryServiceInterface.deleteFreeBookByBookId(bookId);
         return ResponseEntity.noContent().build();
     }
 
     @Override
-    public ResponseEntity<FreeBook> borrowFreeBook(@PathVariable Long bookId) {
-        Optional<FreeBook> borrowedFreeBook = libraryServiceImpl.borrowFreeBookByBookId(bookId);
+    public ResponseEntity<FreeBookDTO> borrowFreeBook(@PathVariable Long bookId) {
+        Optional<FreeBookDTO> borrowedFreeBook = libraryServiceInterface.borrowFreeBookByBookId(bookId);
         return borrowedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
-    public ResponseEntity<FreeBook> returnFreeBook(@PathVariable Long bookId) {
-        Optional<FreeBook> returnedFreeBook = libraryServiceImpl.returnFreeBookByBookId(bookId);
+    public ResponseEntity<FreeBookDTO> returnFreeBook(@PathVariable Long bookId) {
+        Optional<FreeBookDTO> returnedFreeBook = libraryServiceInterface.returnFreeBookByBookId(bookId);
         return returnedFreeBook.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
