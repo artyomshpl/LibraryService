@@ -1,9 +1,9 @@
-package com.shep.services.impl;
+package com.shep.services.implementation;
 
-import com.shep.dto.FreeBookDTO;
+import com.shep.dataTransferObjects.FreeBookDTO;
 import com.shep.entities.FreeBook;
 import com.shep.exceptions.NotFoundException;
-import com.shep.mappers.FreeBookMapper;
+import com.shep.mapper.FreeBookMapper;
 import com.shep.repositories.FreeBookRepository;
 import com.shep.services.interfaces.LibraryServiceInterface;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,8 @@
 package com.shep.controllers;
 
 import com.shep.controllers.impl.LibraryControllerImpl;
-import com.shep.dto.FreeBookDTO;
-import com.shep.services.impl.LibraryServiceImpl;
+import com.shep.dataTransferObjects.FreeBookDTO;
+import com.shep.services.implementation.LibraryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

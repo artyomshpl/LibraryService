@@ -1,6 +1,6 @@
-package com.shep.mappers;
+package com.shep.mapper;
 
-import com.shep.dto.FreeBookDTO;
+import com.shep.dataTransferObjects.FreeBookDTO;
 import com.shep.entities.FreeBook;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -1,6 +1,6 @@
 package com.shep.controllers.interfaces;
 
-import com.shep.dto.FreeBookDTO;
+import com.shep.dataTransferObjects.FreeBookDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

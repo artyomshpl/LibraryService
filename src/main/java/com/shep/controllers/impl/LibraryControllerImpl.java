@@ -1,7 +1,7 @@
 package com.shep.controllers.impl;
 
 import com.shep.controllers.interfaces.LibraryControllerDocs;
-import com.shep.dto.FreeBookDTO;
+import com.shep.dataTransferObjects.FreeBookDTO;
 import com.shep.services.interfaces.LibraryServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

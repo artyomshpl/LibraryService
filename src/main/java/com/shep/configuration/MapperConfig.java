@@ -1,10 +1,10 @@
-package com.shep.config;
+package com.shep.configuration;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.shep.mappers.FreeBookMapper;
+import com.shep.mapper.FreeBookMapper;
 
 @Configuration
 public class MapperConfig {

@@ -1,6 +1,6 @@
 package com.shep.services.interfaces;
 
-import com.shep.dto.FreeBookDTO;
+import com.shep.dataTransferObjects.FreeBookDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,10 +1,10 @@
 package com.shep.services;
 
-import com.shep.dto.FreeBookDTO;
+import com.shep.dataTransferObjects.FreeBookDTO;
 import com.shep.entities.FreeBook;
-import com.shep.mappers.FreeBookMapper;
+import com.shep.mapper.FreeBookMapper;
 import com.shep.repositories.FreeBookRepository;
-import com.shep.services.impl.LibraryServiceImpl;
+import com.shep.services.implementation.LibraryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
